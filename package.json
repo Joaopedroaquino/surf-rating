@@ -1,0 +1,23 @@
+{
+  "name": "rating-surf",
+  "version": "1.0.0",
+  "description": "Rating Surf API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Joaopedroaquino/surf-rating.git"
+  },
+  "keywords": [
+    "nodejs",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Joaopedroaquino/surf-rating/issues"
+  },
+  "homepage": "https://github.com/Joaopedroaquino/surf-rating#readme"
+}
