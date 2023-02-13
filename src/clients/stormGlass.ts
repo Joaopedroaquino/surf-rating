@@ -41,13 +41,20 @@ export class StormGlass {
     constructor(protected request: AxiosStatic) { }
 
     public async fetchPoints(lat: number, lng: number): Promise<ForecastPoint[]> {
-        const response = await this.request.get<StormGlassForecastResponse>('https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}');
+        const response = await this.request.get<StormGlassForecastResponse>('https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}',
+            {
+                headers: {
+                    Authorization: 'fake-token'
+
+                }
+            });
+
         return this.normalizeResponse(response.data);
 
     }
 
     private normalizeResponse(points: StormGlassForecastResponse): ForecastPoint[] {
-        return points.hours.filter(this.isValidPoint.bind(this)).map((point)=> ({
+        return points.hours.filter(this.isValidPoint.bind(this)).map((point) => ({
             swellDirection: point.swellDirection[this.stormGlassAPISource],
             swellHeight: point.swellHeight[this.stormGlassAPISource],
             swellPeriod: point.swellPeriod[this.stormGlassAPISource],
@@ -61,7 +68,7 @@ export class StormGlass {
         }));
     }
     private isValidPoint(point: Partial<StormGlassPoint>): boolean {
-        return !! (
+        return !!(
             point.time &&
             point.swellDirection?.[this.stormGlassAPISource] &&
             point.swellHeight?.[this.stormGlassAPISource] &&
@@ -69,7 +76,7 @@ export class StormGlass {
             point.waveDirection?.[this.stormGlassAPISource] &&
             point.waveHeight?.[this.stormGlassAPISource] &&
             point.windDirection?.[this.stormGlassAPISource] &&
-            point.windSpeed?.[this.stormGlassAPISource] 
+            point.windSpeed?.[this.stormGlassAPISource]
         );
 
 
